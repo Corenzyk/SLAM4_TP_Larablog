@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         // Vérification de si l'user connecté est bien l'auteur, renvoie une erreur forbidden si non
         if ($article->user_id !== Auth::user()->id) {
-            abort(403);
+            abort(403)->with('error', 'Vous ne pouvez pas modifier cet article');
         }
         // Renvoie de la vue avec l'article prêt à être modifié
         return view('articles.edit', [
@@ -55,19 +55,33 @@ class UserController extends Controller
     {
         // Vérification de si l'user connecté est bien l'auteur, renvoie une erreur forbidden si non
         if ($article->user_id !== Auth::user()->id) {
-            abort(403);
+            abort(403)->with('error', 'Vous ne pouvez pas modifier cet article');
         }
 
-        // On récupère les données du formulaire
+        // Récupération des données transmises du formulaire
         $data = $request->only(['title', 'content', 'draft']);
 
-        // Gestion du draft
+        // Récupération de l'état de l'article (brouillon ou non)
         $data['draft'] = isset($data['draft']) ? 1 : 0;
 
-        // On met à jour l'article
+        // Mise à jour de l'article
         $article->update($data);
 
-        // On redirige l'utilisateur vers la liste des articles (avec un flash)
-        return redirect()->route('dashboard')->with('success', 'Article mis à jour !');
+        // Redirection de l'utilisateur au dashboard (avec parametre pour message flash)
+        return redirect()->route('dashboard')->with('success', 'Article modifié !');
+    }
+
+    public function remove(Request $request, Article $article)
+    {
+        // Vérification de si l'user connecté est bien l'auteur, renvoie une erreur forbidden si non
+        if ($article->user_id !== Auth::user()->id) {
+            abort(403)->with('error', 'Vous ne pouvez pas supprimer cet article');
+        }
+
+        // Suppression de l'article
+        $article->delete();
+
+        // Redirection de l'utilisateur au dashboard (avec parametre pour message flash)
+        return redirect()->route('dashboard')->with('success', 'Article supprimé !');
     }
 }
