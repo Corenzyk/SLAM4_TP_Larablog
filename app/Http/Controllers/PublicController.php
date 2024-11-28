@@ -19,4 +19,16 @@ class PublicController extends Controller
             'user' => $user
         ]);
     }
+
+    public function show(User $user, Article $article)
+    {
+        if ($article->user_id !== $user->id) {
+            abort(403)->with('error', 'Vous ne pouvez pas consultez cet article');
+        }
+
+        // Reste à compléter
+        // $article est l'article à afficher
+
+        // Vérifier que l'article est publié (draft == 0)
+    }
 }
