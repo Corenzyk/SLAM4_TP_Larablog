@@ -8,6 +8,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/{user}', [PublicController::class, 'index'])->name('public.index');
+Route::get('/{user}/{article}', [PublicController::class, 'show'])->name('public.show');
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
