@@ -38,4 +38,36 @@ class UserController extends Controller
         // Redirection de l'utilisateur vers la page de ses articles
         return redirect()->route('dashboard');
     }
+
+    public function edit(Article $article)
+    {
+        // Vérification de si l'user connecté est bien l'auteur, renvoie une erreur forbidden si non
+        if ($article->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+        // Renvoie de la vue avec l'article prêt à être modifié
+        return view('articles.edit', [
+            'article' => $article
+        ]);
+    }
+
+    public function update(Request $request, Article $article)
+    {
+        // Vérification de si l'user connecté est bien l'auteur, renvoie une erreur forbidden si non
+        if ($article->user_id !== Auth::user()->id) {
+            abort(403);
+        }
+
+        // On récupère les données du formulaire
+        $data = $request->only(['title', 'content', 'draft']);
+
+        // Gestion du draft
+        $data['draft'] = isset($data['draft']) ? 1 : 0;
+
+        // On met à jour l'article
+        $article->update($data);
+
+        // On redirige l'utilisateur vers la liste des articles (avec un flash)
+        return redirect()->route('dashboard')->with('success', 'Article mis à jour !');
+    }
 }
