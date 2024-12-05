@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -22,7 +24,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('articles.create');
+        {{$categories = Category::all();}}
+        return view('articles.create',['categories'=>$categories]);
     }
 
     public function store(Request $request)
@@ -35,6 +38,8 @@ class UserController extends Controller
         $data['draft'] = isset($data['draft']) ? 1 : 0;
         // Création de l'article
         $article = Article::create($data);
+        // Ajout des category dans la table pivot
+        $article->categories()->sync($request->input('category'));
         // Redirection de l'utilisateur vers la page de ses articles
         return redirect()->route('dashboard');
     }
@@ -60,13 +65,12 @@ class UserController extends Controller
 
         // Récupération des données transmises du formulaire
         $data = $request->only(['title', 'content', 'draft']);
-
         // Récupération de l'état de l'article (brouillon ou non)
         $data['draft'] = isset($data['draft']) ? 1 : 0;
-
         // Mise à jour de l'article
         $article->update($data);
-
+        // Ajout des category dans la table pivot
+        $article->categories()->sync($request->input('category'));
         // Redirection de l'utilisateur au dashboard (avec parametre pour message flash)
         return redirect()->route('dashboard')->with('success', 'Article modifié !');
     }

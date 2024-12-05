@@ -18,6 +18,7 @@
         </div>
     </div>
 
+    Commentaires :
     @foreach ($article->comments as $comment)
         <div class="p-6 text-gray-900 dark:text-gray-100">
             <p class="text-gray-700 dark:text-gray-300">{{ $comment->content }}</p>

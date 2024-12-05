@@ -1,8 +1,9 @@
-<h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-    Liste des articles publiés de {{ $user->name }}
-</h2>  
+ 
 <x-guest-layout>
     <div>
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Liste des articles publiés de {{ $user->name }}
+        </h2> 
         <!-- Articles -->
         @foreach ($articles as $article)
         <div>
