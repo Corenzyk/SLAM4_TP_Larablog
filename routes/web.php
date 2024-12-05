@@ -9,6 +9,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+require __DIR__.'/auth.php';
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -23,5 +25,3 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/{user}', [PublicController::class, 'index'])->name('public.index');
 Route::get('/{user}/{article}', [PublicController::class, 'show'])->name('public.show');
-
-require __DIR__.'/auth.php';
