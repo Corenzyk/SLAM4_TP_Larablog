@@ -25,7 +25,9 @@ class UserController extends Controller
     public function create()
     {
         {{$categories = Category::all();}}
-        return view('articles.create',['categories'=>$categories]);
+        return view('articles.create',[
+            'categories'=>$categories
+        ]);
     }
 
     public function store(Request $request)
@@ -50,9 +52,13 @@ class UserController extends Controller
         if ($article->user_id !== Auth::user()->id) {
             abort(403)->with('error', 'Vous ne pouvez pas modifier cet article');
         }
+        
+        {{$categories = Category::all();}}
+
         // Renvoie de la vue avec l'article prêt à être modifié
         return view('articles.edit', [
-            'article' => $article
+            'article' => $article,
+            'categories'=>$categories
         ]);
     }
 
