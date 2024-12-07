@@ -33,4 +33,20 @@ class PublicController extends Controller
             'article' => $article
         ]);
     }
+
+    public function home()
+    {
+        $articles = Article::orderByDesc('likes')->orderByDesc('created_at')->take(3)->get();
+        return view('home', [
+            'articles' => $articles
+        ]);
+    }
+
+    public function listArticles()
+    {
+        $articles = Article::get();
+        return view('public.liste', [
+            'articles' => $articles
+        ]);
+    }
 }

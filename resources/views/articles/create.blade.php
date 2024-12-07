@@ -17,7 +17,7 @@
                 <div class="form-check">
                     <!-- Choix des catégories -->
                     @foreach ($categories as $category)
-                        <input type="checkbox" class="form-check-input" id="{{$category->id}}" name="category" value="{{$category->id}}">
+                        <input type="checkbox" class="form-check-input" id="{{$category->id}}" name="category[]" value="{{$category->id}}">
                         <label class="form-check-label" for="{{$category->id}}">
                             {{$category->name}}
                         </label>
