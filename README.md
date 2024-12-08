@@ -64,3 +64,8 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Mes Remarques
+
+Une conclusion assez difficile au premier abord mais simple une fois lancé dedans. Le majeur défaut étant toujours le CSS qui me peine à savoir bien gérer.
+J'ai ajouter des fonctionnalités peu compliqué à mettre en place (bouton pour amener sur tout les articles).
