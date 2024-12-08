@@ -38,6 +38,8 @@ class UserController extends Controller
         $data['user_id'] = Auth::user()->id;
         // Récupération de l'état de l'article (brouillon ou non)
         $data['draft'] = isset($data['draft']) ? 1 : 0;
+        // Définition des likes par défaut
+        $data['likes'] = 0;
         // Création de l'article
         $article = Article::create($data);
         // Ajout des category dans la table pivot
